@@ -1,0 +1,570 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Microservicio #PRUEBA",
+        "version": "1.0.0",
+        "title": "MICROSERVICE #PRUEBA",
+        "contact": {
+            "name": "Leonel Aguilar",
+            "email": "leoaguilarsanchez97@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:5000/test",
+    "basePath": "/",
+    "paths": {
+        "/": {
+            "name": "Clientes",
+            "get": {
+                "summary": "Obtiene informacion de clientes",
+                "description": "Obtiene toda la informacion almacenada de todos los clientes",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limite de documentos a retornar",
+                        "required": false,
+                        "type": "integer",
+                        "example": 10,
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Página donde se encuentran los documentos",
+                        "required": false,
+                        "type": "integer",
+                        "example": 1,
+                        "default": 1
+                    },
+                    {
+                        "name": "contain",
+                        "in": "query",
+                        "description": "Filtro",
+                        "required": false,
+                        "type": "String",
+                        "example": "Lee",
+                        "default": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/getResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno en el servidor",
+                        "schema": {
+                            "type": "string",
+                            "example": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Guardar informacion de un cliente",
+                "description": "Valida y guarda en la base de datos un registro con toda la informacion del cliente",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "client",
+                        "description": "Informacion a enviar del cliente individual",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operacion exitosa",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Petición incorrecta o inválida",
+                        "schema": {
+                            "type": "string",
+                            "value": "Bad request"
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno en el servidor",
+                        "schema": {
+                            "type": "string",
+                            "example": "Internal Server Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "summary": "Obtiene informacion de un cliente específico",
+                "description": "Obtiene toda la informacion almacenada de todos los clientes, o de un cliente especifico",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del cliente específico a retornar",
+                        "required": true,
+                        "type": "string",
+                        "example": "0ad80fd1-bcac-490d-88d3-2b86995b9462"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/getResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No se encontro el cliente",
+                        "schema": {
+                            "type": "string",
+                            "example": "Not found"
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno en el servidor",
+                        "schema": {
+                            "type": "string",
+                            "example": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Modificar la informacion de un cliente",
+                "description": "Valida y modifica en la base de datos un registro con toda la informacion del cliente",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del cliente específico a modificar",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "client",
+                        "description": "Informacion a modificar del cliente individual",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/UserModified"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operacion exitosa",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Petición incorrecta o inválida",
+                        "schema": {
+                            "type": "string",
+                            "value": "Bad request"
+                        }
+                    },
+                    "404": {
+                        "description": "No se encontro el cliente",
+                        "schema": {
+                            "type": "string",
+                            "example": "Not found"
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno en el servidor",
+                        "schema": {
+                            "type": "string",
+                            "example": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina la informacion de un cliente",
+                "description": "Elimina el registro de informacion del cliente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del cliente específico a eliminar",
+                        "required": true,
+                        "type": "string",
+                        "example": "0ad80fd1-bcac-490d-88d3-2b86995b9462"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operacion exitosa",
+                        "schema": {
+                            "type": "string",
+                            "example": "OK"
+                        }
+                    },
+                    "404": {
+                        "description": "No se encontro el cliente",
+                        "schema": {
+                            "type": "string",
+                            "example": "Not found"
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno en el servidor",
+                        "schema": {
+                            "type": "string",
+                            "example": "Internal Server Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "getResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "middle_name": {
+                    "type": "string"
+                },
+                "maiden_name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "marital_status": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string",
+                    "pattern": "^[M|F]"
+                },
+                "date_of_birth": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "city_of_birth": {
+                    "type": "string"
+                },
+                "state_of_birth": {
+                    "type": "string"
+                },
+                "day_phone": {
+                    "type": "string"
+                },
+                "cell_phone": {
+                    "type": "string"
+                },
+                "evening_phone": {
+                    "type": "string"
+                },
+                "fax": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "ssn": {
+                    "type": "string"
+                },
+                "nationality": {
+                    "type": "string"
+                },
+                "alien_number": {
+                    "type": "integer"
+                },
+                "passport_number": {
+                    "type": "integer"
+                },
+                "passport_issuing_country": {
+                    "type": "string"
+                },
+                "passport_issue_date": {
+                    "type": "string"
+                },
+                "passport_valid_until": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "arrival_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "disabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "middle_name": {
+                    "type": "string",
+                    "example": ""
+                },
+                "maiden_name": {
+                    "type": "string",
+                    "example": ""
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Dr"
+                },
+                "marital_status": {
+                    "type": "string",
+                    "example": "single"
+                },
+                "sex": {
+                    "type": "string",
+                    "pattern": "^[M|F]",
+                    "example": "M"
+                },
+                "date_of_birth": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1997-04-22"
+                },
+                "city_of_birth": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "state_of_birth": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "day_phone": {
+                    "type": "string",
+                    "example": "+50256121243"
+                },
+                "cell_phone": {
+                    "type": "string",
+                    "example": "+50256121243"
+                },
+                "evening_phone": {
+                    "type": "string",
+                    "example": ""
+                },
+                "fax": {
+                    "type": "string",
+                    "example": ""
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "johndoe@gmail.com"
+                },
+                "ssn": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "nationality": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "alien_number": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "passport_number": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "passport_issuing_country": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "passport_issue_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "passport_valid_until": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "arrival_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "disabled": {
+                    "type": "boolean",
+                    "example": "false"
+                }
+            }
+        },
+        "UserModified": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "example": "Jean"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Due"
+                },
+                "middle_name": {
+                    "type": "string",
+                    "example": "Lee"
+                },
+                "maiden_name": {
+                    "type": "string",
+                    "example": ""
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Mr"
+                },
+                "marital_status": {
+                    "type": "string",
+                    "example": "single"
+                },
+                "sex": {
+                    "type": "string",
+                    "pattern": "^[M|F]",
+                    "example": "M"
+                },
+                "date_of_birth": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1997-04-22"
+                },
+                "city_of_birth": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "state_of_birth": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "day_phone": {
+                    "type": "string",
+                    "example": "+50256121243"
+                },
+                "cell_phone": {
+                    "type": "string",
+                    "example": "+50256121243"
+                },
+                "evening_phone": {
+                    "type": "string",
+                    "example": ""
+                },
+                "fax": {
+                    "type": "string",
+                    "example": ""
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "jeanlee@gmail.com"
+                },
+                "ssn": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "nationality": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "alien_number": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "passport_number": {
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "passport_issuing_country": {
+                    "type": "string",
+                    "example": "Guatemala"
+                },
+                "passport_issue_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "passport_valid_until": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "arrival_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "disabled": {
+                    "type": "boolean",
+                    "example": "false"
+                }
+            }
+        }
+    }
+}
