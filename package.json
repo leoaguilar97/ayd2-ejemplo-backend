@@ -1,0 +1,19 @@
+{
+  "name": "ayd2-ejemplo-backend",
+  "version": "1.0.0",
+  "description": "Ejemplo de backend para el curso AYD2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoaguilar97/ayd2-ejemplo-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoaguilar97/ayd2-ejemplo-backend/issues"
+  },
+  "homepage": "https://github.com/leoaguilar97/ayd2-ejemplo-backend#readme"
+}
